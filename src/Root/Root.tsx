@@ -1,14 +1,12 @@
 import "react";
-
+import { Link, Outlet } from "react-router-dom";
 import styled from "styled-components";
 
-import AllCollections from "Collections/All";
-
-export default function Home() {
+export default function Root() {
   return (
     <Wrapper>
       <Header />
-      <AllCollections onSelect={() => {}} />
+      <Outlet />
     </Wrapper>
   );
 }
@@ -20,7 +18,9 @@ const Wrapper = styled.div`
 function Header() {
   return (
     <HeaderWrapper>
-      <Title>SWAPP</Title>
+      <Link to="/">
+        <Title>SWAPP</Title>
+      </Link>
       <Subtitle>(Star Wars App)</Subtitle>
     </HeaderWrapper>
   );

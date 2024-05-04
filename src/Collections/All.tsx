@@ -1,26 +1,14 @@
 import "react";
-
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-const names = {
-  films: "🎬 Films",
-  people: "🧑 People",
-  vehicles: "🚀 Vehicles",
-} as const;
+import { collectionKeys, CollectionKey, collectionNames } from "constants";
 
-type CollectionKey = keyof typeof names;
-
-const collectionKeys = Object.keys(names) as CollectionKey[];
-
-interface AllProps {
-  onSelect: (name: CollectionKey) => void;
-}
-
-export default function All({ onSelect }: AllProps) {
+export default function All() {
   return (
     <Wrapper>
       {collectionKeys.map((name) => (
-        <Collection collection={name} onClick={onSelect} />
+        <Collection key={name} collection={name} />
       ))}
     </Wrapper>
   );
@@ -34,13 +22,12 @@ const Wrapper = styled.ul`
 
 interface CollectionProps {
   collection: CollectionKey;
-  onClick: (name: CollectionKey) => void;
 }
 
-function Collection({ collection, onClick }: CollectionProps) {
+function Collection({ collection }: CollectionProps) {
   return (
     <ListItem>
-      <Anchor onClick={() => onClick(collection)}>{names[collection]}</Anchor>
+      <Link to={`/${collection}`}>{collectionNames[collection]}</Link>
     </ListItem>
   );
 }
@@ -54,6 +41,13 @@ const ListItem = styled.li`
   letter-spacing: 0.125rem;
   text-transform: uppercase;
 
+  a {
+    display: block;
+    cursor: pointer;
+    padding: 1rem;
+    width: 100%;
+  }
+
   &:hover {
     transform: translateX(10px);
   }
@@ -61,11 +55,4 @@ const ListItem = styled.li`
   & + & {
     margin-top: 1.5rem;
   }
-`;
-
-const Anchor = styled.a`
-  display: block;
-  cursor: pointer;
-  padding: 1rem;
-  width: 100%;
 `;
