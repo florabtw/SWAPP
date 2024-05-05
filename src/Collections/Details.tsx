@@ -24,7 +24,9 @@ export default function Details() {
     client[collection].fetch(id).then((d) => setData(d));
   }, [collection, id]);
 
-  if (!data) return;
+  if (!id) return;
+  /* return empty div so it takes up space before data loads */
+  if (!data) return <div />;
 
   const keys = Object.keys(data.properties)
     .filter((k) => !hideKeys.includes(k))

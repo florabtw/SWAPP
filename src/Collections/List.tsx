@@ -22,9 +22,10 @@ export default function List() {
     client[collection].list().then((is) => setItems(is));
   }, [collection]);
 
-  if (!items.length) return;
-
+  if (!collection) return;
   if (windowSize.width < 800 && id) return;
+  /* return empty div so it takes up space before data loads */
+  if (!items.length) return <div />;
 
   return (
     <ListWrapper>
