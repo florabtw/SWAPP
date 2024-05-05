@@ -4,7 +4,44 @@ import styled from "styled-components";
 
 import useWindowSize from "hooks/useWindowSize";
 import { ListItem, ListWrapper } from "./List";
-import { collectionKeys, collectionNames, RouteParams } from "constants";
+import { CollectionKey, collectionKeys, RouteParams } from "constants";
+
+const Emoji = ({ children }: { children: React.ReactNode }) => (
+  <span role="img">{children}</span>
+);
+
+export const collectionNames: Record<CollectionKey, React.ReactNode> = {
+  films: (
+    <>
+      <Emoji>🎬</Emoji> Films
+    </>
+  ),
+  people: (
+    <>
+      <Emoji>🧑</Emoji> People
+    </>
+  ),
+  planets: (
+    <>
+      <Emoji>🌎</Emoji> Planets
+    </>
+  ),
+  species: (
+    <>
+      <Emoji>🦣</Emoji> Species
+    </>
+  ),
+  starships: (
+    <>
+      <Emoji>🚀</Emoji> Species
+    </>
+  ),
+  vehicles: (
+    <>
+      <Emoji>🏍️</Emoji> Species
+    </>
+  ),
+} as const;
 
 export default function All() {
   const windowSize = useWindowSize();
