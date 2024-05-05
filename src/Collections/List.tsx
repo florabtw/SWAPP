@@ -24,7 +24,7 @@ export default function List() {
 
   if (!items.length) return;
 
-  if (windowSize.width < 1200 && id) return;
+  if (windowSize.width < 800 && id) return;
 
   return (
     <ListWrapper>

@@ -8,9 +8,10 @@ import { collectionKeys, collectionNames, RouteParams } from "constants";
 
 export default function All() {
   const windowSize = useWindowSize();
-  const { collection } = useParams<RouteParams>();
+  const { collection, id } = useParams<RouteParams>();
 
-  if (windowSize.width < 1200 && collection) return;
+  if (windowSize.width < 800 && collection) return;
+  if (windowSize.width < 1200 && id) return;
 
   return (
     <ListWrapper>

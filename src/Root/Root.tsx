@@ -30,13 +30,13 @@ const Page = styled.div`
 `;
 
 const Container = styled.main`
-  @media (min-width: 1200px) {
+  @media (min-width: 800px) {
     display: flex;
   }
 `;
 
 const Child = styled.div`
-  @media (min-width: 1200px) {
+  @media (min-width: 800px) {
     flex-basis: 100%;
     min-width: 0px;
     transition: flex-basis 0.5s ease-out 0s;
