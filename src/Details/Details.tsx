@@ -28,8 +28,9 @@ export default function Details() {
 
 const resourceReferences: Record<string, CollectionKey> = {
   characters: "people",
-  homeworld: "planets",
   films: "films",
+  homeworld: "planets",
+  people: "people",
   pilots: "people",
   planets: "planets",
   species: "species",
@@ -126,7 +127,12 @@ function Resource({
     client.getByUrl(url).then((result) => setData(result));
   }, []);
 
-  if (!data) return url;
+  /* This causes a bit of visual noise, but I'm not that upset about it given
+   * the tradeoffs. */
+  if (!data) {
+    const path = url.split("/").slice(-2).join("/");
+    return <Link to={"/" + path}>{path}</Link>;
+  }
 
   const title =
     collection === "films" ? data.properties.title : data.properties.name;
