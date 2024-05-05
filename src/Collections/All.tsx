@@ -25,7 +25,7 @@ export default function All() {
 }
 
 const CollectionItem = styled(ListItem)`
-  background: #668ebb;
+  background: #547497;
   letter-spacing: 0.125rem;
   text-transform: uppercase;
 `;

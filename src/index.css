@@ -1,9 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap");
 
 :root {
-  /* colors (mostly) from
-   * https://www.vox.com/culture/2015/12/17/10322514/star-wars-colors */
-  --c-background: #333333;
   --c-text-color: #bcc9dc;
   --c-text-shadow: hsl(215.6, 31.4%, 50%);
 }
@@ -14,7 +11,7 @@
 
 html,
 body {
-  background: #333333;
+  background: linear-gradient(to right, #444, #000);
   font-family: "Nunito", sans-serif;
   margin: 0;
   padding: 0;
