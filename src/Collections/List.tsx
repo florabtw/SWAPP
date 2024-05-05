@@ -28,7 +28,7 @@ export default function List() {
   if (!items.length) return <div />;
 
   return (
-    <ListWrapper>
+    <ListWrapper aria-label={collection}>
       {items.map((i) => {
         const name = "properties" in i ? i.properties.title : i.name;
         return (
@@ -66,10 +66,14 @@ export function ListItem({
   selected,
 }: ListItemProps) {
   return (
-    <ListItemWrapper className={className} selected={selected}>
+    <ListItemWrapper
+      className={className}
+      selected={selected}
+      aria-current={selected && "page"}
+    >
       {children}
       {selected && (
-        <SelectIcon>
+        <SelectIcon aria-hidden="true">
           <Saber name={name} />
         </SelectIcon>
       )}
