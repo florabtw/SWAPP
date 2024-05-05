@@ -26,7 +26,7 @@ export default function Root() {
 }
 
 const Page = styled.div`
-  padding: 2rem;
+  padding: 4rem 2rem;
 `;
 
 const Container = styled.main`
@@ -67,7 +67,11 @@ function Header() {
 }
 
 const HeaderWrapper = styled.header`
+  align-items: center;
   margin-bottom: 4rem;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
 `;
 
 const Title = styled.h1`
@@ -77,7 +81,8 @@ const Title = styled.h1`
   font-style: italic;
   font-weight: 800;
   letter-spacing: 0.75rem;
-  margin-bottom: 0;
+  margin: 0;
+  padding: 0 2rem;
   text-align: center;
   text-shadow: 4px 4px 8px var(--c-text-shadow);
 `;
