@@ -24,15 +24,13 @@ const storage = (() => {
   return { get, set };
 })();
 
-export interface Resource {
-  uid: string;
-  name: string;
-  url: string;
-}
+export type Resource =
+  | { uid: string; properties: { title: string } } /* Films */
+  | { uid: string; name: string; url: string }; /* Not Films */
 
 type ListResponse =
   | { message: string; results: Resource[] }
-  | { message: string; result: Film[] };
+  | { message: string; result: Resource[] };
 
 /* There are currently fewer than 100 of each resource, so just fetch them
  * all, and put them in localstorage. This prevents the rate slowing:
@@ -57,43 +55,68 @@ const listAll =
     return items as V;
   };
 
-const films = (() => {
-  const list = listAll<Film[]>({ path: "films" });
+/* Also store detail responses in localstorage. We really want to minimize
+ * requests to SWAPI. */
+async function getByUrl(url: string) {
+  const stored = storage.get(url);
+  if (stored) return stored;
 
-  return { list };
+  const res = await fetch(url);
+  const body = await res.json();
+  const data = body.result;
+
+  storage.set(url, data);
+
+  return data;
+}
+
+const toUrl = (path: string) => `https://swapi.tech/api/${path}`;
+
+const films = (() => {
+  const fetch = (id: string) => getByUrl(toUrl(`films/${id}`));
+  const list = listAll<Resource[]>({ path: "films" });
+
+  return { fetch, list };
 })();
 
 const planets = (() => {
+  const fetch = (id: string) => getByUrl(toUrl(`planets/${id}`));
   const list = listAll<Resource[]>({ path: "planets" });
 
-  return { list };
+  return { fetch, list };
 })();
 
 const people = (() => {
+  const fetch = (id: string) => getByUrl(toUrl(`people/${id}`));
   const list = listAll<Resource[]>({ path: "people" });
 
-  return { list };
+  return { fetch, list };
 })();
 
 const species = (() => {
+  const fetch = (id: string) => getByUrl(toUrl(`species/${id}`));
   const list = listAll<Resource[]>({ path: "species" });
 
-  return { list };
+  return { fetch, list };
 })();
 
 const starships = (() => {
+  const fetch = (id: string) => getByUrl(toUrl(`starships/${id}`));
   const list = listAll<Resource[]>({ path: "starships" });
 
-  return { list };
+  return { fetch, list };
 })();
 
 const vehicles = (() => {
+  const fetch = (id: string) => getByUrl(toUrl(`vehicles/${id}`));
   const list = listAll<Resource[]>({ path: "vehicles" });
 
-  return { list };
+  return { fetch, list };
 })();
 
 const client = {
+  getByUrl,
+
   films,
   planets,
   people,

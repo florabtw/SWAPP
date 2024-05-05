@@ -11,22 +11,10 @@ export default function List() {
     <ListWrapper>
       {items.map((i) => (
         <ListItem key={i.uid}>
-          <Link to={`/${location.pathname}/${i.uid}`}>
-            <span>{i.name}</span>
+          <Link to={`${location.pathname}/${i.uid}`}>
+            <span>{"properties" in i ? i.properties.title : i.name}</span>
           </Link>
         </ListItem>
-      ))}
-    </ListWrapper>
-  );
-}
-
-export function Films() {
-  const films = useLoaderData() as Film[];
-
-  return (
-    <ListWrapper>
-      {films.map((film) => (
-        <Film key={film.uid} film={film} />
       ))}
     </ListWrapper>
   );
@@ -37,16 +25,6 @@ const ListWrapper = styled.ul`
   margin: 0;
   padding: 0;
 `;
-
-function Film({ film }: { film: Film }) {
-  return (
-    <ListItem>
-      <Link to={`/films/${film.uid}`}>
-        <span>{film.properties.title}</span>
-      </Link>
-    </ListItem>
-  );
-}
 
 const ListItem = styled.li`
   background: #4b596f;

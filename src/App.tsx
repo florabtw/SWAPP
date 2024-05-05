@@ -1,11 +1,12 @@
 import "react";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, Params, RouterProvider } from "react-router-dom";
 
 import AllCollections from "Collections/All";
 import Details from "Details";
-import List, { Films } from "Collections/List";
+import List from "Collections/List";
 import Root from "Root";
 import client from "client";
+import { collectionKeys } from "constants";
 
 const router = createBrowserRouter([
   {
@@ -13,33 +14,19 @@ const router = createBrowserRouter([
     element: <Root />,
     children: [
       { path: "/", element: <AllCollections /> },
-      { path: "/films", element: <Films />, loader: () => client.films.list() },
-      {
-        path: "/people",
-        element: <List />,
-        loader: () => client.people.list(),
-      },
-      {
-        path: "/planets",
-        element: <List />,
-        loader: () => client.planets.list(),
-      },
-      {
-        path: "/species",
-        element: <List />,
-        loader: () => client.species.list(),
-      },
-      {
-        path: "/starships",
-        element: <List />,
-        loader: () => client.starships.list(),
-      },
-      {
-        path: "/vehicles",
-        element: <List />,
-        loader: () => client.vehicles.list(),
-      },
-      { path: "/:resource/:id/", element: <Details /> },
+      ...collectionKeys.flatMap((key) => [
+        {
+          path: "/" + key,
+          element: <List />,
+          loader: () => client[key].list(),
+        },
+        {
+          path: "/" + key + "/:id",
+          element: <Details />,
+          loader: ({ params }: { params: Params<string> }) =>
+            client[key].fetch(params.id!),
+        },
+      ]),
     ],
   },
 ]);

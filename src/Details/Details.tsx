@@ -1,3 +1,135 @@
+import { Link, useLoaderData } from "react-router-dom";
+import styled from "styled-components";
+
+import { CollectionKey } from "constants";
+import client from "client";
+import React from "react";
+
+type DetailData = {
+  properties: Record<string, string | string[]>;
+};
+
+const hideKeys = ["url", "created", "edited"];
+
 export default function Details() {
-  return <p>Hi!</p>;
+  const data = useLoaderData() as DetailData;
+  const keys = Object.keys(data.properties)
+    .filter((k) => !hideKeys.includes(k))
+    .sort();
+
+  return (
+    <ListWrapper>
+      {keys.map((prop: string) => (
+        <DetailItem key={prop} prop={prop} value={data.properties[prop]} />
+      ))}
+    </ListWrapper>
+  );
+}
+
+const resourceReferences: Record<string, CollectionKey> = {
+  characters: "people",
+  homeworld: "planets",
+  films: "films",
+  pilots: "people",
+  planets: "planets",
+  species: "species",
+  starships: "starships",
+  vehicles: "vehicles",
+};
+
+interface DetailItemProps {
+  prop: string;
+  value: string | string[];
+}
+
+function DetailItem({ prop, value }: DetailItemProps) {
+  // hacky, but functional. would prefer a key:value map for more customization
+  const title = prop.replace(/_/g, " ");
+
+  return (
+    <ListItem>
+      <ListTitle>{title}</ListTitle>
+      <ListValue>
+        {prop in resourceReferences ? (
+          <Resources collection={resourceReferences[prop]} value={value} />
+        ) : (
+          value
+        )}
+      </ListValue>
+    </ListItem>
+  );
+}
+
+const ListWrapper = styled.ul`
+  color: white;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+`;
+
+const ListItem = styled.li`
+  background: #ac866c;
+  border-radius: 0.5rem;
+  color: black;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  padding: 1rem;
+`;
+
+const ListTitle = styled.div`
+  font-weight: bold;
+  text-align: center;
+  text-transform: capitalize;
+  margin-bottom: 0.5rem;
+`;
+
+const ListValue = styled.div`
+  text-align: center;
+
+  a {
+    text-decoration: underline;
+  }
+`;
+
+interface ResourceListProps {
+  collection: CollectionKey;
+  value: string | string[];
+}
+
+/* Take a list of SWAPI urls and render them as links with descriptive text */
+function Resources({ collection, value }: ResourceListProps) {
+  const values = Array.isArray(value) ? value : [value];
+
+  /* Is there a better way to add commas? Maybe.
+   * Do I know it right now? No */
+  return values
+    .flatMap((url) => [
+      <Resource collection={collection} key={url} url={url} />,
+      ", ",
+    ])
+    .slice(0, -1);
+}
+
+function Resource({
+  collection,
+  url,
+}: {
+  collection: CollectionKey;
+  url: string;
+}) {
+  const [data, setData] = React.useState<Record<string, any>>();
+
+  React.useEffect(() => {
+    client.getByUrl(url).then((result) => setData(result));
+  }, []);
+
+  if (!data) return url;
+
+  const title =
+    collection === "films" ? data.properties.title : data.properties.name;
+
+  return <Link to={`/${collection}/${data.uid}`}>{title}</Link>;
 }
