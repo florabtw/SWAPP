@@ -1,7 +1,7 @@
-import { Link, useLoaderData } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import styled from "styled-components";
 
-import { CollectionKey } from "constants";
+import { CollectionKey, RouteParams } from "constants";
 import client from "client";
 import React from "react";
 
@@ -12,7 +12,20 @@ type DetailData = {
 const hideKeys = ["url", "created", "edited"];
 
 export default function Details() {
-  const data = useLoaderData() as DetailData;
+  const [data, setData] = React.useState<DetailData | null>(null);
+  const { collection, id } = useParams<RouteParams>();
+
+  React.useEffect(() => {
+    if (!collection || !id) {
+      setData(null);
+      return;
+    }
+
+    client[collection].fetch(id).then((d) => setData(d));
+  }, [collection, id]);
+
+  if (!data) return;
+
   const keys = Object.keys(data.properties)
     .filter((k) => !hideKeys.includes(k))
     .sort();
@@ -67,6 +80,7 @@ const ListWrapper = styled.ul`
   gap: 1rem;
   flex-wrap: wrap;
   list-style: none;
+  margin: 0;
   padding: 0;
 `;
 
@@ -77,6 +91,7 @@ const ListItem = styled.li`
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+  overflow: hidden;
   padding: 1rem;
 `;
 

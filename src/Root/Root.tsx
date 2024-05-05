@@ -1,18 +1,55 @@
 import "react";
-import { Link, Outlet } from "react-router-dom";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
+
+import AllCollections from "Collections/All";
+import List from "Collections/List";
+import Details from "Collections/Details";
 
 export default function Root() {
   return (
-    <Wrapper>
+    <Page>
       <Header />
-      <Outlet />
-    </Wrapper>
+      <Container>
+        <Child>
+          <AllCollections />
+        </Child>
+        <Child>
+          <List />
+        </Child>
+        <Child>
+          <Details />
+        </Child>
+      </Container>
+    </Page>
   );
 }
 
-const Wrapper = styled.div`
-  padding: 0 2rem;
+const Page = styled.div`
+  padding: 2rem;
+`;
+
+const Container = styled.main`
+  @media (min-width: 1200px) {
+    display: flex;
+  }
+`;
+
+const Child = styled.div`
+  @media (min-width: 1200px) {
+    flex-basis: 100%;
+    min-width: 0px;
+    transition: flex-basis 0.5s ease-out 0s;
+
+    & + & {
+      margin-left: 2rem;
+    }
+
+    &:empty {
+      flex-basis: 0%;
+      margin-left: 0;
+    }
+  }
 `;
 
 function Header() {

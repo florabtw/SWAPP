@@ -10,3 +10,8 @@ export const collectionNames = {
 export type CollectionKey = keyof typeof collectionNames;
 
 export const collectionKeys = Object.keys(collectionNames) as CollectionKey[];
+
+export type RouteParams = {
+  collection?: CollectionKey;
+  id?: string;
+};
