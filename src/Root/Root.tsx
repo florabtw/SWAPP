@@ -30,6 +30,9 @@ const Page = styled.div`
 `;
 
 const Container = styled.main`
+  max-width: 1600px;
+  margin: 0 auto;
+
   @media (min-width: 800px) {
     display: flex;
   }
