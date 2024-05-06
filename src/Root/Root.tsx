@@ -42,7 +42,7 @@ const Child = styled.div`
   @media (min-width: 800px) {
     flex-basis: 100%;
     min-width: 0px;
-    transition: flex-basis 0.5s ease-out 0s;
+    transition: all 0.5s ease-out;
 
     & + & {
       margin-left: 2rem;
@@ -61,7 +61,9 @@ function Header() {
       <Link to="/">
         <Title>SWAPP</Title>
       </Link>
-      <Subtitle>(Star Wars App)</Subtitle>
+      <Subtitle>
+        (Star Wars App - <a href="https://swapi.tech">SWAPI</a> browser)
+      </Subtitle>
     </HeaderWrapper>
   );
 }
@@ -94,4 +96,8 @@ const Subtitle = styled.p`
   font-weight: bold;
   margin-top: 0;
   text-align: center;
+
+  a {
+    text-decoration: underline;
+  }
 `;

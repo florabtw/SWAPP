@@ -33,12 +33,12 @@ export const collectionNames: Record<CollectionKey, React.ReactNode> = {
   ),
   starships: (
     <>
-      <Emoji>🚀</Emoji> Species
+      <Emoji>🚀</Emoji> Starships
     </>
   ),
   vehicles: (
     <>
-      <Emoji>🏍️</Emoji> Species
+      <Emoji>🏍️</Emoji> Vehicles
     </>
   ),
 } as const;

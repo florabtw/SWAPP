@@ -48,7 +48,9 @@ export const ListWrapper = styled.ul`
   flex-direction: column;
   gap: 1.5rem;
   list-style: none;
-  margin: 0;
+  margin: 0 auto;
+  min-width: 300px;
+  max-width: 600px;
   padding: 0;
 `;
 
@@ -102,14 +104,13 @@ const ListItemWrapper = styled.li<{ selected?: boolean }>`
   font-weight: bold;
   line-height: 1.5;
   overflow: hidden;
-  text-wrap: nowrap;
   position: relative;
 
   ${(props) => props.selected && selectedStyles}
 
   a {
     display: block;
-    padding: 1rem;
+    padding: 1rem 2rem;
     width: 100%;
   }
 

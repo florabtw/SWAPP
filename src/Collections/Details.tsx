@@ -83,6 +83,7 @@ const ListWrapper = styled.ul`
   flex-wrap: wrap;
   list-style: none;
   margin: 0;
+  min-width: 300px;
   padding: 0;
 `;
 
