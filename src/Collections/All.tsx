@@ -47,7 +47,9 @@ export default function All() {
   const windowSize = useWindowSize();
   const { collection, id } = useParams<RouteParams>();
 
+  /* Hide if on mobile, and on List page */
   if (windowSize.width < 800 && collection) return;
+  /* Hide if on ~tablet, and on Detail page. */
   if (windowSize.width < 1200 && id) return;
 
   return (

@@ -23,6 +23,7 @@ export default function List() {
   }, [collection]);
 
   if (!collection) return;
+  /* Hide if on ~Mobile, and on Detail page */
   if (windowSize.width < 800 && id) return;
   /* return empty div so it takes up space before data loads */
   if (!items.length) return <div />;

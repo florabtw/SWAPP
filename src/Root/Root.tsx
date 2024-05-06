@@ -6,6 +6,7 @@ import AllCollections from "Collections/All";
 import List from "Collections/List";
 import Details from "Collections/Details";
 
+/* Always render container + all children in order to get animations to work */
 export default function Root() {
   return (
     <Page>
