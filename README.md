@@ -18,3 +18,5 @@ Then navigate to [http://localhost:5173](http://localhost:5173)
 
 You can also find the site hosted at
 [swapp.flora.cool](https://swapp.flora.cool)
+
+Try to find the easter egg! :egg:
