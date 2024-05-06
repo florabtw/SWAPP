@@ -50,7 +50,7 @@ export const ListWrapper = styled.ul`
   list-style: none;
   margin: 0 auto;
   min-width: 300px;
-  max-width: 600px;
+  max-width: 800px;
   padding: 0;
 `;
 
